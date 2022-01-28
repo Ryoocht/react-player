@@ -11,28 +11,32 @@ const VideoPlayer = ({ url }) => {
   }
 
   return (
-    <div className='player-wrapper'>
+    <div className='player_wrapper'>
       <ReactPlayer 
-        className='react-player'
+        className='react_player'
         controls={false}
         url={url}
         playing={playing}
+        width='80%'
+        height='80%'
         onProgress={handleProgress}
       />
-      <div className='timeContainer'>
-        <div className='timeStyle'>0:00</div>
-        <div className='timeStyle'>/</div>
-        <div className='timeStyle'>1:23</div>
-      </div>
-      <div className='play-pause'>
-        {playing
-        ? <FaPause />
-        : <FaPlay />
-        }
-      </div>
-      <div className='propgress-box'>
-        <div className='loaded-bar'></div>
-        <input type="range" className='progress-bar' defaultValue="0"/>
+      <div className='player_container'>
+        <div className='time_container'>
+          <div className='time_style'>0:00</div>
+          <div className='hyphen'>/</div>
+          <div className='time_style'>88:88</div>
+        </div>
+        <div className='play_pause'>
+          {playing
+          ? <FaPause />
+          : <FaPlay />
+          }
+        </div>
+        <div className='propgress_box'>
+          <div className='loaded_bar'></div>
+          <input type="range" className='progress_bar' defaultValue="0"/>
+        </div>
       </div>
     </div>
   )
