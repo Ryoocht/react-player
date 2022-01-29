@@ -49,13 +49,22 @@ body {
   height: 100%;
   padding-top: 0.4em;
   margin-right: 1.5em;
+  cursor: pointer;
 }
 
 .propgress_box {
+  --bar-bg: #757a79;
+  --played-bar: #5585b5;
+  --loaded-bar: #9ba6a5;
+  --knobby: #5585b5;
+  --selectedKnobby: #bbe4e9;
+  --played-width: 0;
+  --loaded-width: 0;
+
   position: relative;
   width: 75%;
   height: 5px;
-  background: #757a79;
+  background: var(--bar-bg);
   border-radius: 10px;
   margin-top: 0.7em;
 }
@@ -64,17 +73,95 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 40%;
   height: 5px;
-  background: #9ba6a5;
+  width: var(--loaded-width);
+  background: var(--loaded-bar);
   border-radius: 10px;
 }
 
 .progress_bar {
+  appearance: none;
+  background: transparent;
   position: absolute;
   top: 0;
   left: 0;
   height: 5px;
+  width: 100%;
   border-radius: 10px;
   margin: 0;
+}
+
+.progress_bar::-webkit-slider-runnable-track {
+  background: var(transparent);
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+  outline: none;
+}
+
+.progress_bar::-moz-range-track {
+  background: var(transparent);
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+  outline: none;
+}
+
+.progress_bar::-moz-focus-outer {
+  border: 0;
+}
+
+.progress_bar::before {
+  content: '';
+  height: 5px;
+  width: var(--played-width);
+  background: var(--played-bar);
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.progress_bar::-moz-range-progress {
+  background: var(--played-width);
+  border-radius: 10px;
+  height: 5px;
+}
+
+.progress_bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: none;
+  background: var(--knobby);
+  cursor: pointer;
+  position: relative;
+  margin: 0 0 0 0;
+  z-index: 3;
+  box-sizing: border-box;
+}
+
+.progress_bar:active::-webkit-slider-thumb {
+  transform: scale(1.2);
+  background: var(--selectedKnobby);
+}
+
+.progress_bar::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: transparent;
+  background: var(--knobby);
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+  box-sizing: border-box;
+}
+
+.progress_bar:active::-moz-range-thumb {
+  transform: scale(1.2);
+  background: var(--selectedKnobby);
 }
