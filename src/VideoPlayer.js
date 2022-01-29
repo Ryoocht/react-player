@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReactPlayer from 'react-player'
 import { FaPlay, FaPause } from "react-icons/fa"
+import PlaybackSpeed from './PlaybackSpeed'
 
 const VideoPlayer = ({ url }) => {
   const [ playing, setPlaying ] = useState(false)
   const [ currentTime, setCurrentTime ] = useState(0)
   const [ loadedTime, setLoadedTime ] = useState(0)
   const [ duration, setDuration ] = useState(0)
+  const [ playbackRate, setPlaybackRate] = useState(1)
 
   const videoPlayer = useRef()
   const progressBar = useRef()
@@ -64,7 +66,9 @@ const VideoPlayer = ({ url }) => {
         ref={videoPlayer}
         onProgress={handleProgress}
         onDuration={handleDuration}
+        playbackRate={playbackRate}
       />
+      <PlaybackSpeed />
       <div className='player_container'>
         <div className='time_container'>
           <div className='time_style'>{calculateTime(currentTime) ?? '0:00'}</div>
