@@ -1,27 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReactPlayer from 'react-player'
 import { FaPlay, FaPause } from "react-icons/fa"
-import PlaybackSpeed from './PlaybackSpeed'
+import FullscreenIcon from '@mui/icons-material/Fullscreen'
+import PlaybackRate from './PlaybackRate'
+import screenfull from 'screenfull'
+import FlipVideoController from './FlipVideoController'
 
 const VideoPlayer = ({ url }) => {
   const [ playing, setPlaying ] = useState(false)
   const [ currentTime, setCurrentTime ] = useState(0)
-  const [ loadedTime, setLoadedTime ] = useState(0)
   const [ duration, setDuration ] = useState(0)
-  const [ playbackRate, setPlaybackRate] = useState(1)
+  const [ playbackRate, setPlaybackRate] = useState(1.0)
+  const [ flipped, setFlipped ] = useState('Flip Video')
 
-  const videoPlayer = useRef()
-  const progressBar = useRef()
-  const loadBar = useRef()
+  const videoPlayer = useRef(null)
+  const progressBar = useRef(null)
+  const loadBar = useRef(null)
+  const playerContainerRef = useRef(null)
 
   useEffect(() => {
     progressBar.current.max = duration
-  }, [duration]);
+  }, [duration])
+  
 
   const handleProgress = ({ played, loaded, playedSeconds }) => {
     setCurrentTime(playedSeconds)
     changeProgressBarTime(played)
-    setLoadedTime(loaded)
     changeLoadBarTime(loaded)
     progressBar.current.value = currentTime
   }
@@ -50,14 +54,25 @@ const VideoPlayer = ({ url }) => {
   }
 
   const changeLoadBarTime = (loaded) => {
-    console.log(`${Math.floor(loaded * 100)}%`);
     loadBar.current.style.setProperty('--loaded-width', `${Math.floor(loaded * 100)}%`)
   }
 
+  const handlePlaybackRateChange = (rate) => {
+    setPlaybackRate(rate)
+  }
+
+  const toggleFullScreen = () => {
+    screenfull.toggle(playerContainerRef.current)
+  }
+
+  const handleFlipVideo = (select) => {
+    setFlipped(select)
+  }
+
   return (
-    <div className='player_wrapper'>
+    <div className='player_wrapper' ref={playerContainerRef}>
       <ReactPlayer 
-        className='react_player'
+        className={flipped === 'Flip' ? 'react_player rotateY180' : 'react_player'}
         controls={false}
         url={url}
         playing={playing}
@@ -68,7 +83,14 @@ const VideoPlayer = ({ url }) => {
         onDuration={handleDuration}
         playbackRate={playbackRate}
       />
-      <PlaybackSpeed />
+      <FlipVideoController 
+        flipVideo={flipped}
+        onFlipped={handleFlipVideo}
+      />
+      <PlaybackRate 
+        playbackRate={playbackRate} 
+        onPlaybackRateChange={handlePlaybackRateChange}
+      />
       <div className='player_container'>
         <div className='time_container'>
           <div className='time_style'>{calculateTime(currentTime) ?? '0:00'}</div>
@@ -90,6 +112,7 @@ const VideoPlayer = ({ url }) => {
             ref={progressBar}
             onChange={changeProgress}/>
         </div>
+        <FullscreenIcon className='screenfull' onClick={toggleFullScreen}/>
       </div>
     </div>
   )

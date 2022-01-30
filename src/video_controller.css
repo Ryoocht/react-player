@@ -1,0 +1,63 @@
+.playbackrate_wrapper {
+    position: absolute;
+    top: 5%;
+    left: 45%;
+    width: 7em;
+    text-align: center;
+}
+
+.flip_video_wrapper {
+    position: absolute;
+    top: 5%;
+    left: 25%;
+    width: 10em;
+    text-align: center;
+}
+
+.select_wraper {
+    background: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.default_option {
+    margin: 0.5em 0;
+    z-index: 1;
+}
+
+.animation {
+    animation-name:fadeIn;
+    animation-duration:0.5s; 
+    animation-fill-mode: forwards;
+    z-index: -1;
+}
+
+@keyframes fadeIn {
+    0% {
+        transform: translateY(-15px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.select_title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.select_title:hover {
+    background: #fff4dd;
+}
+
+.speed_value {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.arrowIcons {
+    padding-left: 0.5em;
+}

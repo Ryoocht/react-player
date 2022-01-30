@@ -17,6 +17,10 @@ body {
   height: 100%;
 }
 
+.rotateY180 {
+  transform: rotateY(180deg);
+}
+
 .player_container {
   position: absolute;
   top: 73%;
@@ -164,4 +168,10 @@ body {
 .progress_bar:active::-moz-range-thumb {
   transform: scale(1.2);
   background: var(--selectedKnobby);
+}
+
+.screenfull {
+  margin-top: 0.1em;
+  margin-left: 0.8em;
+  cursor: pointer;
 }
